@@ -18,6 +18,9 @@
 
 /*------ module includes -------*/
 
+#define DEVIATION_THRESHOLD_FOR_CURRENT    			0.1
+#define DEVIATION_THRESHOLD_FOR_SOC	    			0.05
+
 typedef enum {	DEVIATION_IN_PARAMETER_VALUE, 
 				NO_DEVIATION_IN_PARAMETER_VALUE
 }parameter_Deviation_t;
