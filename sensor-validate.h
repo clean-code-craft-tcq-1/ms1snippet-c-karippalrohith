@@ -1,6 +1,4 @@
-//Test
 int _give_me_a_good_name(double value, double nextValue, double maxDelta);
 
-int validateSOCreadings(double* values, int numOfValues);
+int validateParameter_Readings(double* values, int numOfValues, double deviationValue);
 
-int validateCurrentreadings(double* values, int numOfValues);
