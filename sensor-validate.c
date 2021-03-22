@@ -15,6 +15,7 @@
  =======                            INCLUDES                             =======
  ============================================================================*/
 /*------ standard includes -------*/
+#include <cstddef>
 
 /*------ module includes --------*/
 #include "sensor-validate.h"
