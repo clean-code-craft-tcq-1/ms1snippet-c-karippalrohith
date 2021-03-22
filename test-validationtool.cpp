@@ -14,3 +14,9 @@ TEST_CASE("reports error when current jumps abruptly") {
   int numOfCurReadings = sizeof(currentReadings) / sizeof(currentReadings[0]);
   REQUIRE(validateParameter_Readings(currentReadings, numOfCurReadings,DEVIATION_THRESHOLD_FOR_CURRENT) == 0);
 }
+
+TEST_CASE("reports error when current passes NULL value") {
+  double currentReadings[] = {};
+  int numOfCurReadings = sizeof(currentReadings) / sizeof(currentReadings[0]);
+  REQUIRE(validateParameter_Readings(currentReadings, numOfCurReadings,DEVIATION_THRESHOLD_FOR_CURRENT) == 0);
+}
