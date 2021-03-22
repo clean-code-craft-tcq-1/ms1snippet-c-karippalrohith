@@ -78,6 +78,10 @@ parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int 
 		}
 	}
   }
+  else
+  {
+	  return INVALID_PARAMETER_VALUES;
+  }
   
   return VALID_PARAMETER_VALUES;
 }
