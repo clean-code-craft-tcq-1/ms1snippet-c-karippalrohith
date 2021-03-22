@@ -63,7 +63,7 @@ parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int 
   
   for(int i = 0; i < lastButOneIndex; i++) 
   {
-    if(!validate_Deviation_In_Consecutive_Parameter_Values(paramValues[i], paramValues[i + 1], deviationValue)) 
+    if(!validate_Deviation_In_Consecutive_Parameter_Values(paramValues[i], paramValues[i + 1], deviationThreshold)) 
 	{
       return INVALID_PARAMETER_VALUES;
     }
