@@ -77,7 +77,7 @@ parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int 
 		//{
 		//	return INVALID_PARAMETER_VALUES;
 		//}
-		parameter_Values_Validity_Status &= (parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)?((int)INVALID_PARAMETER_VALUES):((int)VALID_PARAMETER_VALUES);
+		parameter_Values_Validity_Status &= (int)(parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)?((int)INVALID_PARAMETER_VALUES):((int)VALID_PARAMETER_VALUES);
 	}
   }
   else
