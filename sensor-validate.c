@@ -36,9 +36,10 @@
  =============================================================================*/
 
 
-parameter_Deviation_t validate_Deviation_In_Consecutive_Parameter_Values(double value, double nextValue, double maxDelta) {
+parameter_Deviation_t validate_Deviation_In_Consecutive_Parameter_Values(double value, double nextValue, double maxDelta) 
+{
   
-  if((nextValue - value) > maxDelta) 
+  if((nextValue - value) > maxDelta) /*Check if deviation is greater than threshold*/
   {
     return DEVIATION_IN_PARAMETER_VALUE;
   }
@@ -57,16 +58,22 @@ parameter_Deviation_t validate_Deviation_In_Consecutive_Parameter_Values(double 
  *     \returns  	void
  *
  *//*------------------------------------------------------------------------*/
-parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold) {
+parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold) 
+{
 	
   int lastButOneIndex = numOfValues - 1;
+  parameter_Deviation_t parameter_Deviation_Check;
   
   for(int i = 0; i < lastButOneIndex; i++) 
   {
-    if(!validate_Deviation_In_Consecutive_Parameter_Values(paramValues[i], paramValues[i + 1], deviationThreshold)) 
+	
+	parameter_Deviation_Check = validate_Deviation_In_Consecutive_Parameter_Values(paramValues[i], paramValues[i + 1], deviationThreshold);
+	
+    if(parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE) /*Check for if any parameter value have a deviation*/
 	{
       return INVALID_PARAMETER_VALUES;
     }
   }
+  
   return VALID_PARAMETER_VALUES;
 }
