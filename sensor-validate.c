@@ -37,21 +37,32 @@
  =============================================================================*/
 
 
-parameter_Deviation_t validate_Deviation_In_Consecutive_Parameter_Values(double value, double nextValue, double maxDelta) 
-{
-  
+int validate_Deviation_In_Consecutive_Parameter_Values(double value, double nextValue, double maxDelta) 
+{  
   if((nextValue - value) > maxDelta) /*Check if deviation is greater than threshold*/
   {
     return DEVIATION_IN_PARAMETER_VALUE;
   }
-  return NO_DEVIATION_IN_PARAMETER_VALUE;
+  else
+  {
+	return NO_DEVIATION_IN_PARAMETER_VALUE;
+  }
 }
 
-parameter_Values_Validity_t validate_Parameter_Status(parameter_Deviation_t parameter_Deviation_Check,parameter_Values_Validity_t retVal)
+int validate_Parameter_Status(int parameter_Deviation_Check,int retVal)
 {
-	parameter_Values_Validity_t retVal_r;
-	retVal_r = (parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)?INVALID_PARAMETER_VALUES:VALID_PARAMETER_VALUES;
-	retVal_r = retVal_r & retVal;
+	int retVal_r;
+	
+	if(parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)
+	{
+		retVal_r = DEVIATION_IN_PARAMETER_VALUE;
+	}
+	else
+	{
+		retVal_r = NO_DEVIATION_IN_PARAMETER_VALUE;
+	}
+	
+	retVal_r &= retVal;
 	
 	return retVal_r;
 }
@@ -68,12 +79,12 @@ parameter_Values_Validity_t validate_Parameter_Status(parameter_Deviation_t para
  *     \returns  	void
  *
  *//*------------------------------------------------------------------------*/
-parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold) 
+int validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold) 
 {
 	
   int lastButOneIndex = numOfValues - 1;
   parameter_Deviation_t parameter_Deviation_Check;
-  parameter_Values_Validity_t retVal = 0;
+  int retVal = 0;
   parameter_Values_Validity_t parameter_Values_Validity_Status = VALID_PARAMETER_VALUES;
   
 	if(NULL == paramValues)
@@ -87,6 +98,6 @@ parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int 
 		
 		retVal = validate_Parameter_Status(parameter_Deviation_Check,retVal);
 	}
-	
+
 	return retVal;
 }
