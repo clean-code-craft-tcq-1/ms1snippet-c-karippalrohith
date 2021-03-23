@@ -51,7 +51,7 @@ parameter_Values_Validity_t validate_Parameter_Status(parameter_Deviation_t para
 {
 	parameter_Values_Validity_t retVal_r;
 	retVal_r = (parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)?INVALID_PARAMETER_VALUES:VALID_PARAMETER_VALUES;
-	retVal_r &= retVal;
+	retVal_r = retVal_r & retVal;
 	
 	return retVal_r;
 }
