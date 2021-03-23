@@ -1,10 +1,10 @@
 /* ******************************************************************************
  ***
- ***     \file        Checker.c
- ***     \ingroup     Session2-TCQ
+ ***     \file        sensor-validate.c
+ ***     \ingroup     Assessment1-TCQ
  ***     \author      Rohith K N
  ***
- ***     \brief       Main file to check BMS
+ ***     \brief       Main file to check Sensor parameters
  ***
  ***     \par         File_description
  ***                  This file explores more about functions
@@ -36,35 +36,57 @@
  =======                              METHODS                            =======
  =============================================================================*/
 
-
-int validate_Deviation_In_Consecutive_Parameter_Values(double value, double nextValue, double maxDelta) 
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION: validate_Deviation_In_Consecutive_Parameter_Values
+ */
+/*!    \brief   Function to validate the jump in consecutive parameter values
+ *
+ *
+ *     \param    	currentValue -> Current value of the parameter
+					nextValue -> Next value of the parameter
+					deviationThreshold -> the threshold for which sensor value can vary wrt to the previous value
+ *     \returns  	int -> Status of sudden jump in parameter value
+ *//*------------------------------------------------------------------------*/
+int validate_Deviation_In_Consecutive_Parameter_Values(double currentValue, double nextValue, double deviationThreshold) 
 {  
-  if((nextValue - value) > maxDelta) /*Check if deviation is greater than threshold*/
+  if((nextValue - currentValue) > deviationThreshold) /*Check if consective values have deviation greater than threshold*/
   {
-    return DEVIATION_IN_PARAMETER_VALUE;
+    return SUDDEN_DEVIATION_IN_PARAMETER_VALUE;
   }
   else
   {
-	return NO_DEVIATION_IN_PARAMETER_VALUE;
+	return NO_SUDDEN_DEVIATION_IN_PARAMETER_VALUE;
   }
 }
 
-int validate_Parameter_Status(int parameter_Deviation_Check,int retVal)
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION: validate_Parameter_Status
+ */
+/*!    \brief   Function to validate the jump in consecutive parameter values
+ *
+ *
+ *     \param    	parameter_Deviation_Check -> Status of sudden jump in parameter value
+					parameter_Validation_Status -> Status of parameter till the value that was evaluated
+ *     \returns  	int -> Status of overall validity of parameter based on sudden jump
+ *//*------------------------------------------------------------------------*/
+int validate_Parameter_Status(int parameter_Deviation_Check,int parameter_Validation_Status)
 {
-	int retVal_r;
+	int parameter_Validation_Status_Current;
+	int parameter_Validation_Status_Overall;
 	
-	if(parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)
+	if(parameter_Deviation_Check == SUDDEN_DEVIATION_IN_PARAMETER_VALUE) /*Assign the parameter validity to invalid if there is a sudden jump*/
 	{
-		retVal_r = DEVIATION_IN_PARAMETER_VALUE;
+		parameter_Validation_Status_Current = INVALID_PARAMETER_VALUES;
 	}
 	else
 	{
-		retVal_r = NO_DEVIATION_IN_PARAMETER_VALUE;
+		parameter_Validation_Status_Current = VALID_PARAMETER_VALUES;
 	}
 	
-	retVal_r &= retVal;
-	
-	return retVal_r;
+	/*Assign the overall validity of the parameter based on the current value and previous values*/
+	parameter_Validation_Status_Overall = parameter_Validation_Status_Current & parameter_Validation_Status;
+		
+	return parameter_Validation_Status_Overall;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -76,7 +98,7 @@ int validate_Parameter_Status(int parameter_Deviation_Check,int retVal)
  *     \param    	paramValues -> Sensor values for the respective parameter
 					numOfValues -> Number of samples
 					deviationThreshold -> the threshold for which sensor value can vary wrt to the previous value
- *     \returns  	void
+ *     \returns  	int -> Status of validated parameter readings
  *
  *//*------------------------------------------------------------------------*/
 int validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold) 
@@ -84,7 +106,7 @@ int validateParameter_Readings(double* paramValues, int numOfValues, double devi
 	
   int lastButOneIndex = numOfValues - 1;
   int parameter_Deviation_Check;
-  int retVal = 0;
+  int parameter_Validation_Status = INVALID_PARAMETER_VALUES;
   
   
 	if(NULL == paramValues)
@@ -93,11 +115,13 @@ int validateParameter_Readings(double* paramValues, int numOfValues, double devi
 	}
   
 	for(int i = 0; i < lastButOneIndex; i++) 
-	{		
+	{	
+		/*Check the deviation in consecutive parameter values*/
 		parameter_Deviation_Check = validate_Deviation_In_Consecutive_Parameter_Values(paramValues[i], paramValues[i + 1], deviationThreshold);
 		
-		retVal = validate_Parameter_Status(parameter_Deviation_Check,retVal);
+		/*Checks the overall validity of the paramter based on sudden jumps*/
+		parameter_Validation_Status = validate_Parameter_Status(parameter_Deviation_Check,parameter_Validation_Status);
 	}
 
-	return retVal;
+	return parameter_Validation_Status;
 }
