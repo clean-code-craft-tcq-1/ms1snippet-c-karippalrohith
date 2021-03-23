@@ -63,7 +63,7 @@ parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int 
 {
 	
   int lastButOneIndex = numOfValues - 1;
-retVal  parameter_Deviation_t parameter_Deviation_Check;
+  parameter_Deviation_t parameter_Deviation_Check;
   int retVal = 0;
   parameter_Values_Validity_t parameter_Values_Validity_Status = VALID_PARAMETER_VALUES;
   
