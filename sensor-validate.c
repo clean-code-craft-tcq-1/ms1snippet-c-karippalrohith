@@ -59,7 +59,7 @@ parameter_Deviation_t validate_Deviation_In_Consecutive_Parameter_Values(double 
  *     \returns  	void
  *
  *//*------------------------------------------------------------------------*/
-parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold) 
+int validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold) 
 {
 	
   int lastButOneIndex = numOfValues - 1;
@@ -79,7 +79,8 @@ parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int 
 		retVal &= (parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)?0:1;
 	}
 
-	parameter_Values_Validity_Status = (retVal == 0)?INVALID_PARAMETER_VALUES:VALID_PARAMETER_VALUES;
+	//parameter_Values_Validity_Status = (retVal == 0)?INVALID_PARAMETER_VALUES:VALID_PARAMETER_VALUES;
 	
-	return parameter_Values_Validity_Status;
+	//return parameter_Values_Validity_Status;
+	return retVal;
 }
