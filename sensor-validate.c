@@ -83,9 +83,9 @@ int validateParameter_Readings(double* paramValues, int numOfValues, double devi
 {
 	
   int lastButOneIndex = numOfValues - 1;
-  parameter_Deviation_t parameter_Deviation_Check;
+  int parameter_Deviation_Check;
   int retVal = 0;
-  parameter_Values_Validity_t parameter_Values_Validity_Status = VALID_PARAMETER_VALUES;
+  
   
 	if(NULL == paramValues)
 	{
