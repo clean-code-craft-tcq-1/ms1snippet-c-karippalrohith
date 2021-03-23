@@ -47,6 +47,15 @@ parameter_Deviation_t validate_Deviation_In_Consecutive_Parameter_Values(double 
   return NO_DEVIATION_IN_PARAMETER_VALUE;
 }
 
+int validate_Parameter_Status(parameter_Deviation_t parameter_Deviation_Check,int retVal)
+{
+	int retVal_r;
+	retVal_r = (parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)?0:1;
+	retVal_r &= retVal;
+	
+	return retVal_r;
+}
+
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION: validateParameter_Readings
  */
@@ -76,7 +85,8 @@ int validateParameter_Readings(double* paramValues, int numOfValues, double devi
 	{		
 		parameter_Deviation_Check = validate_Deviation_In_Consecutive_Parameter_Values(paramValues[i], paramValues[i + 1], deviationThreshold);
 		
-		retVal &= (parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)?0:1;
+		retVal = validate_Parameter_Status(parameter_Deviation_Check,retVal);
+		//retVal &= (parameter_Deviation_Check == DEVIATION_IN_PARAMETER_VALUE)?0:1;
 	}
 
 	//parameter_Values_Validity_Status = (retVal == 0)?INVALID_PARAMETER_VALUES:VALID_PARAMETER_VALUES;
