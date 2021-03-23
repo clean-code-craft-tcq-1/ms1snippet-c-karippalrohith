@@ -33,4 +33,6 @@ parameter_Deviation_t validate_Deviation_In_Consecutive_Parameter_Values(double 
 
 int validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold);
 
+int validate_Parameter_Status(parameter_Deviation_t parameter_Deviation_Check,int retVal);
+
 #endif /*SENSOR_VALIDATION_H_*/
