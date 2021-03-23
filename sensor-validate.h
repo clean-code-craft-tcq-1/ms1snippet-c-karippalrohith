@@ -21,18 +21,16 @@
 #define DEVIATION_THRESHOLD_FOR_CURRENT    			0.1
 #define DEVIATION_THRESHOLD_FOR_SOC	    			0.05
 
-typedef enum {	DEVIATION_IN_PARAMETER_VALUE, 
-				NO_DEVIATION_IN_PARAMETER_VALUE
-}parameter_Deviation_t;
+#define DEVIATION_IN_PARAMETER_VALUE				0u
+#define NO_DEVIATION_IN_PARAMETER_VALUE				1u
+				
+#define INVALID_PARAMETER_VALUES					0u
+#define VALID_PARAMETER_VALUES						1u
 
-typedef enum {	INVALID_PARAMETER_VALUES, 
-				VALID_PARAMETER_VALUES
-}parameter_Values_Validity_t;
+int validate_Deviation_In_Consecutive_Parameter_Values(double value, double nextValue, double maxDelta);
 
-parameter_Deviation_t validate_Deviation_In_Consecutive_Parameter_Values(double value, double nextValue, double maxDelta);
+int validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold);
 
-parameter_Values_Validity_t validateParameter_Readings(double* paramValues, int numOfValues, double deviationThreshold);
-
-parameter_Values_Validity_t validate_Parameter_Status(parameter_Deviation_t parameter_Deviation_Check,parameter_Values_Validity_t retVal);
+int validate_Parameter_Status(int parameter_Deviation_Check,int retVal);
 
 #endif /*SENSOR_VALIDATION_H_*/
