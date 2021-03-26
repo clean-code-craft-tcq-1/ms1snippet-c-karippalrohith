@@ -33,13 +33,13 @@ TEST_CASE("no error when no jump observed in current") {
   REQUIRE(validateParameter_Readings(currentReadings, numOfCurReadings,DEVIATION_THRESHOLD_FOR_CURRENT) == 1);
 }
 
-TEST_CASE("reports error when soc jumps abruptly") {
+TEST_CASE("reports error when soc jumps abruptly up and down") {
   double socReadings[] = {0.0, 0.01, 0.0, 0.51};
   int numOfSocReadings = sizeof(socReadings) / sizeof(socReadings[0]);
   REQUIRE(validateParameter_Readings(socReadings, numOfSocReadings,DEVIATION_THRESHOLD_FOR_SOC) == 0);
 }
 
-TEST_CASE("reports error when current jumps abruptly") {
+TEST_CASE("reports error when current jumps abruptly up and down") {
   double currentReadings[] = {0.0, 0.02, 0.0, 0.33};
   int numOfCurReadings = sizeof(currentReadings) / sizeof(currentReadings[0]);
   REQUIRE(validateParameter_Readings(currentReadings, numOfCurReadings,DEVIATION_THRESHOLD_FOR_CURRENT) == 0);
