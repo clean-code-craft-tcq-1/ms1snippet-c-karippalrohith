@@ -20,3 +20,15 @@ TEST_CASE("reports error when current passes NULL value") {
   int numOfCurReadings = sizeof(currentReadings) / sizeof(currentReadings[0]);
   REQUIRE(validateParameter_Readings(NULL, numOfCurReadings,DEVIATION_THRESHOLD_FOR_CURRENT) == 0);
 }
+
+TEST_CASE("no error when no jump observed in soc") {
+  double socReadings[] = {0.0, 0.01, 0.03, 0.02};
+  int numOfSocReadings = sizeof(socReadings) / sizeof(socReadings[0]);
+  REQUIRE(validateParameter_Readings(socReadings, numOfSocReadings,DEVIATION_THRESHOLD_FOR_SOC) == 1);
+}
+
+TEST_CASE("no error when no jump observed in current") {
+  double currentReadings[] = {0.0, 0.01, 0.03, 0.02};
+  int numOfCurReadings = sizeof(currentReadings) / sizeof(currentReadings[0]);
+  REQUIRE(validateParameter_Readings(currentReadings, numOfCurReadings,DEVIATION_THRESHOLD_FOR_CURRENT) == 0);
+}
