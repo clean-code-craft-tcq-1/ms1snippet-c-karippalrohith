@@ -106,7 +106,7 @@ int validateParameter_Readings(double* paramValues, int numOfValues, double devi
 	
   int lastButOneIndex = numOfValues - 1;
   int parameter_Deviation_Check;
-  int parameter_Validation_Status = INVALID_PARAMETER_VALUES;
+  int parameter_Validation_Status = VALID_PARAMETER_VALUES;
   
   
 	if(NULL == paramValues)
