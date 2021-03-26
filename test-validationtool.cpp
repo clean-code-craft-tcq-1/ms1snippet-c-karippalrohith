@@ -30,5 +30,5 @@ TEST_CASE("no error when no jump observed in soc") {
 TEST_CASE("no error when no jump observed in current") {
   double currentReadings[] = {0.0, 0.01, 0.03, 0.02};
   int numOfCurReadings = sizeof(currentReadings) / sizeof(currentReadings[0]);
-  REQUIRE(validateParameter_Readings(currentReadings, numOfCurReadings,DEVIATION_THRESHOLD_FOR_CURRENT) == 0);
+  REQUIRE(validateParameter_Readings(currentReadings, numOfCurReadings,DEVIATION_THRESHOLD_FOR_CURRENT) == 1);
 }
